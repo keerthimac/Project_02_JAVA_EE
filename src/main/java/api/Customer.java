@@ -1,9 +1,13 @@
 package api;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonParser;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.BufferedReader;
 import java.io.IOException;
 
 public class Customer extends HttpServlet {
@@ -26,6 +30,12 @@ public class Customer extends HttpServlet {
         String name = req.getHeader("name");
         resp.getWriter().println(name);
         //Body
+        BufferedReader reader = req.getReader();
+        Gson gson = new Gson();
+        dto.Customer customer = gson.fromJson(reader, dto.Customer.class);
+        String json = gson.toJson(customer);
+        resp.getWriter().write("recived"+json );
+
     }
 
     @Override
